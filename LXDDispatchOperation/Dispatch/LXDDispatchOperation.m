@@ -40,7 +40,8 @@ LXD_INLINE LXD_FUNCTION_OVERLOAD void __LXDLockExecute(dispatch_block_t block, d
 
 @property (nonatomic, assign) BOOL isCanceled;
 @property (nonatomic, assign) BOOL isExcuting;
-@property (nonatomic, assign) void (*asyn)(dispatch_block_t);
+@property (nonatomic, assign) dispatch_queue_t queue;
+@property (nonatomic, assign) dispatch_queue_t (*asyn)(dispatch_block_t);
 @property (nonatomic, copy) LXDCancelableBlock cancelableBlock;
 
 @end
@@ -107,8 +108,9 @@ LXD_INLINE LXD_FUNCTION_OVERLOAD void __LXDLockExecute(dispatch_block_t block, d
 
 - (void)start {
     __LXDLockExecute(^{
-        self.asyn(^{
+        self.queue = self.asyn(^{
             self.cancelableBlock(self);
+            self.cancelableBlock = nil;
         });
         self.isExcuting = YES;
     });

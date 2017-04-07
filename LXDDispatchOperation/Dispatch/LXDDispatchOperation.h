@@ -18,6 +18,7 @@ typedef void(^LXDCancelableBlock)(LXDDispatchOperation * operation);
 @interface LXDDispatchOperation : NSObject
 
 @property (nonatomic, readonly) BOOL isCanceled;
+@property (nonatomic, readonly) dispatch_queue_t queue;
 
 + (instancetype)dispatchOperationWithBlock: (dispatch_block_t)block;
 + (instancetype)dispatchOperationWithBlock: (dispatch_block_t)block inQoS: (NSQualityOfService)qos;

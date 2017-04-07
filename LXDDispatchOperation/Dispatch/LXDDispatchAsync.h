@@ -18,9 +18,9 @@ typedef NS_ENUM(NSInteger, LXDQualityOfService) {
 };
 
 
-void LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfService qos, dispatch_block_t block);
-void LXDDispatchQueueAsyncBlockInUserInteractive(dispatch_block_t block);
-void LXDDispatchQueueAsyncBlockInUserInitiated(dispatch_block_t block);
-void LXDDispatchQueueAsyncBlockInBackground(dispatch_block_t block);
-void LXDDispatchQueueAsyncBlockInDefault(dispatch_block_t block);
-void LXDDispatchQueueAsyncBlockInUtility(dispatch_block_t block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfService qos, dispatch_block_t block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInUserInteractive(dispatch_block_t block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInUserInitiated(dispatch_block_t block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInBackground(dispatch_block_t block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInDefault(dispatch_block_t block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInUtility(dispatch_block_t block);

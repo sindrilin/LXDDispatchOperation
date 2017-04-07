@@ -156,29 +156,31 @@ LXD_INLINE DispatchContext __LXDDispatchContextGetForQos(LXDQualityOfService qos
     }
 }
 
-void LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfService qos, dispatch_block_t block) {
-    if (block == nil) { return; }
+dispatch_queue_t LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfService qos, dispatch_block_t block) {
+    if (block == nil) { return NULL; }
     DispatchContext context = __LXDDispatchContextGetForQos(qos);
-    dispatch_async(__LXDDispatchContextGetQueue(context), block);
+    dispatch_queue_t queue = __LXDDispatchContextGetQueue(context);
+    dispatch_async(queue, block);
+    return queue;
 }
 
-void LXDDispatchQueueAsyncBlockInUserInteractive(dispatch_block_t block) {
-    LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceUserInteractive, block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInUserInteractive(dispatch_block_t block) {
+    return LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceUserInteractive, block);
 }
 
-void LXDDispatchQueueAsyncBlockInUserInitiated(dispatch_block_t block) {
-    LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceUserInitiated, block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInUserInitiated(dispatch_block_t block) {
+    return LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceUserInitiated, block);
 }
 
-void LXDDispatchQueueAsyncBlockInUtility(dispatch_block_t block) {
-    LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceUtility, block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInUtility(dispatch_block_t block) {
+    return LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceUtility, block);
 }
 
-void LXDDispatchQueueAsyncBlockInBackground(dispatch_block_t block) {
-    LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceBackground, block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInBackground(dispatch_block_t block) {
+    return LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceBackground, block);
 }
 
-void LXDDispatchQueueAsyncBlockInDefault(dispatch_block_t block) {
-    LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceDefault, block);
+dispatch_queue_t LXDDispatchQueueAsyncBlockInDefault(dispatch_block_t block) {
+    return LXDDispatchQueueAsyncBlockInQOS(LXDQualityOfServiceDefault, block);
 }
 
